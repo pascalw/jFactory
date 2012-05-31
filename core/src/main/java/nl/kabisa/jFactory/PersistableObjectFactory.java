@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory.persistence;
+package nl.kabisa.jFactory;
 
 import nl.kabisa.jFactory.ObjectFactory;
 import nl.kabisa.jFactory.annotations.AfterFactoryCreate;

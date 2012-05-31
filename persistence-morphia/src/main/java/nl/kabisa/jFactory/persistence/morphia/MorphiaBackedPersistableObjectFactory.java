@@ -1,6 +1,7 @@
-package nl.kabisa.jFactory.persistence;
+package nl.kabisa.jFactory.persistence.morphia;
 
 import com.google.code.morphia.Datastore;
+import nl.kabisa.jFactory.PersistableObjectFactory;
 
 public abstract class MorphiaBackedPersistableObjectFactory<T> extends PersistableObjectFactory<T> {
 

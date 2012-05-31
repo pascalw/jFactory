@@ -12,13 +12,13 @@ import java.util.Set;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 
-public class FactoryUtils {
+public class Factory {
 
     private static List<String> factoryPackages = newArrayList();
     private static Map<Class<?>, Class<?extends ObjectFactory>> factoryClasses;
 
     public static void addFactoryScanPackage(String factoriesPackage) {
-        FactoryUtils.factoryPackages.add(factoriesPackage);
+        Factory.factoryPackages.add(factoriesPackage);
     }
 
     public static <T> T build(Class<T> objectClass, Object... attributes) {
@@ -26,8 +26,13 @@ public class FactoryUtils {
         return objectFactory.build();
     }
 
+    public static <T> T create(Class<T> objectClass, Object... attributes) {
+        PersistableObjectFactory<T> objectFactory = getFactory(objectClass, attributes);
+        return objectFactory.create();
+    }
+
     @SuppressWarnings("unchecked")
-    public static <T,E> T getFactory(final Class<E> factoryClass, Object... attributes) {
+    public static <T> T getFactory(final Class<?> factoryClass, Object... attributes) {
         Class<?extends ObjectFactory> factory = getFactoryClass(factoryClass);
 
         try {
