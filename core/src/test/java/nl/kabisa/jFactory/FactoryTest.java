@@ -3,6 +3,7 @@ package nl.kabisa.jFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static nl.kabisa.jFactory.Factory.build;
 import static nl.kabisa.jFactory.Factory.getFactory;
 
@@ -16,11 +17,19 @@ public class FactoryTest {
     @Test
     public void buildObject() {
         Article article = build(Article.class, "title", "foobar", "guid", "test");
-        System.out.println(article);
+
+        assertEquals("foobar", article.getTitle());
+        assertEquals("test", article.getGuid());
     }
 
     @Test
     public void factory() {
         ArticleFactory factory = getFactory(Article.class);
+
+        Article article = factory.build("title", "test");
+        assertEquals("test", article.getTitle());
+
+        article = factory.build("title", "test2");
+        assertEquals("test2", article.getTitle());
     }
 }

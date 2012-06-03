@@ -4,8 +4,8 @@ import org.bson.types.ObjectId;
 
 public class ArticleFactory extends MorphiaBackedPersistableObjectFactory<PersistableArticle> {
 
-    public ArticleFactory(Object... attributes) {
-        super(PersistableArticle.class, attributes);
+    public ArticleFactory() {
+        super(PersistableArticle.class);
     }
 
     @Override

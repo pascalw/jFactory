@@ -2,8 +2,8 @@ package nl.kabisa.jFactory;
 
 public class ArticleFactory extends ObjectFactory<Article> {
 
-    public ArticleFactory(Object... attributes) {
-        super(Article.class, attributes);
+    public ArticleFactory() {
+        super(Article.class);
     }
 
     @Override

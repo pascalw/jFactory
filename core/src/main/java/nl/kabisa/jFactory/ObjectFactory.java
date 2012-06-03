@@ -7,33 +7,31 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.google.common.collect.Maps.newHashMap;
 
 public abstract class ObjectFactory<T> {
 
-    private Map<String, Object> propertyValues = new HashMap<String, Object>();
-    private Map<String, Object> fieldValues = new HashMap<String, Object>();
+    private Map<String, Object> defaultPropertyValues = new HashMap<String, Object>();
+    private Map<String, Object> defaultFieldValues = new HashMap<String, Object>();
     private Class<T> factoryClass;
 
     /** Public **/
 
-    public ObjectFactory(Class<T> factoryClass, Object... attributes) {
+    public ObjectFactory(Class<T> factoryClass) {
         this.factoryClass = factoryClass;
 
         // define factory, calls subclasses
         define();
-
-        // merge passed attributes, if any
-        mergeAttributes(attributes);
     }
 
     /**
      * Build object.
      * @return
      */
-    public T build() {
+    public T build(Object... attributes) {
         T object = ReflectionUtils.createObject(factoryClass);
 
-        setProperties(object);
+        setProperties(object, createObjectPropertyValues(defaultPropertyValues, attributes));
         setFields(object);
 
         executeCallbacks(AfterFactoryBuild.class, object);
@@ -45,11 +43,11 @@ public abstract class ObjectFactory<T> {
     protected abstract void define();
 
     protected void field(String name, Object value) {
-        fieldValues.put(name, value);
+        defaultFieldValues.put(name, value);
     }
 
     protected void property(String name, Object value) {
-        propertyValues.put(name, value);
+        defaultPropertyValues.put(name, value);
     }
 
     protected static int rand(int max) {
@@ -92,7 +90,7 @@ public abstract class ObjectFactory<T> {
         ReflectionUtils.setField(target, name, value);
     }
 
-    private void setProperties(T object) {
+    private void setProperties(T object, Map<String, Object> propertyValues) {
         for(String property: propertyValues.keySet()) {
             Object value = propertyValues.get(property);
             setProperty(object, property, value);
@@ -100,13 +98,15 @@ public abstract class ObjectFactory<T> {
     }
 
     private void setFields(T object) {
-        for(String field : fieldValues.keySet()) {
-            Object value = fieldValues.get(field);
+        for(String field : defaultFieldValues.keySet()) {
+            Object value = defaultFieldValues.get(field);
             setField(object, field, value);
         }
     }
 
-    private void mergeAttributes(Object... attributes) {
+    private Map<String, Object> createObjectPropertyValues(Map<String, Object> defaultPropertyValues, Object... attributes) {
+        Map<String, Object> propertyValues = newHashMap(defaultPropertyValues);
+
         if(attributes != null) {
             Iterator<Object> iterator = newArrayList(attributes).iterator();
             Map<String, Object> propertyOverideMap = new HashMap<String, Object>();
@@ -123,5 +123,7 @@ public abstract class ObjectFactory<T> {
 
             propertyValues.putAll(propertyOverideMap);
         }
+
+        return propertyValues;
     }
 }

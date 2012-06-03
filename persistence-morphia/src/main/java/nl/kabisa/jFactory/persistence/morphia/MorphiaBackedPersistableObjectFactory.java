@@ -11,8 +11,8 @@ public abstract class MorphiaBackedPersistableObjectFactory<T> extends Persistab
         MorphiaBackedPersistableObjectFactory.datastore = datastore;
     }
 
-    public MorphiaBackedPersistableObjectFactory(Class<T> factoryClass, Object... attributes) {
-        super(factoryClass, attributes);
+    public MorphiaBackedPersistableObjectFactory(Class<T> factoryClass) {
+        super(factoryClass);
     }
 
     @Override

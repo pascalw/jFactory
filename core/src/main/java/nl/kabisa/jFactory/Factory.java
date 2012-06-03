@@ -23,12 +23,12 @@ public class Factory {
 
     public static <T> T build(Class<T> objectClass, Object... attributes) {
         ObjectFactory<T> objectFactory = getFactory(objectClass, attributes);
-        return objectFactory.build();
+        return objectFactory.build(attributes);
     }
 
     public static <T> T create(Class<T> objectClass, Object... attributes) {
         PersistableObjectFactory<T> objectFactory = getFactory(objectClass, attributes);
-        return objectFactory.create();
+        return objectFactory.create(attributes);
     }
 
     @SuppressWarnings("unchecked")
@@ -36,8 +36,8 @@ public class Factory {
         Class<?extends ObjectFactory> factory = getFactoryClass(factoryClass);
 
         try {
-            Constructor constructor = factory.getConstructor(Object[].class);
-            return (T)constructor.newInstance(new Object[]{ attributes} );
+            Constructor constructor = factory.getConstructor();
+            return (T)constructor.newInstance();
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -61,8 +61,8 @@ public class Factory {
             for(Class<?extends ObjectFactory> clazz : classes) {
                 if(! Modifier.isAbstract(clazz.getModifiers())) {
                     try {
-                        Constructor constructor = clazz.getConstructor(Object[].class);
-                        ObjectFactory factory = (ObjectFactory)constructor.newInstance(new Object[]{null});
+                        Constructor constructor = clazz.getConstructor();
+                        ObjectFactory factory = (ObjectFactory)constructor.newInstance();
                         factoryClasses.put(factory.getFactoryClass(), factory.getClass());
                     } catch (Exception e) {
                         throw new RuntimeException(e); //should not happen, compiler forces factory classes to implement correct constructor.

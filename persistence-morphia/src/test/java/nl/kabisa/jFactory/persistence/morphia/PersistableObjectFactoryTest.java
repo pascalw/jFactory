@@ -4,6 +4,7 @@ import com.google.code.morphia.Datastore;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.Assert.assertEquals;
 import static nl.kabisa.jFactory.Factory.addFactoryScanPackage;
 import static nl.kabisa.jFactory.Factory.create;
 import static org.mockito.Mockito.mock;
@@ -21,9 +22,10 @@ public class PersistableObjectFactoryTest {
 
     @Test
     public void createObject() {
-        PersistableArticle article = create(PersistableArticle.class);
-        System.out.println(article);
+        PersistableArticle article = create(PersistableArticle.class, "title", "test");
 
         verify(datastore).save(article);
+
+        assertEquals("test", article.getTitle());
     }
 }
