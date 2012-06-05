@@ -9,10 +9,9 @@ import java.util.*;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Maps.newHashMap;
 
-public abstract class ObjectFactory<T> {
+public abstract class ObjectFactory<T> extends BasicFactory {
 
-    private Map<String, Object> defaultPropertyValues = new HashMap<String, Object>();
-    private Map<String, Object> defaultFieldValues = new HashMap<String, Object>();
+    private Map<String, Trait> traits = newHashMap();
     private Class<T> factoryClass;
 
     /** Public **/
@@ -20,8 +19,7 @@ public abstract class ObjectFactory<T> {
     public ObjectFactory(Class<T> factoryClass) {
         this.factoryClass = factoryClass;
 
-        // define factory, calls subclasses
-        define();
+        define(); //define the factory, calls subclasses.
     }
 
     /**
@@ -31,8 +29,23 @@ public abstract class ObjectFactory<T> {
     public T build(Object... attributes) {
         T object = ReflectionUtils.createObject(factoryClass);
 
-        setProperties(object, createObjectPropertyValues(defaultPropertyValues, attributes));
-        setFields(object);
+        String trait = null;
+
+        if(attributes.length > 0 && traits.containsKey((String)attributes[0])) {
+            trait = (String)attributes[0];
+            attributes = Arrays.copyOfRange(attributes, 1, attributes.length);
+        }
+
+        Map<String, Object> propertyValues = createObjectPropertyValues(defaultPropertyValues, attributes);
+        Map<String, Object> fieldValues = newHashMap(defaultFieldValues);
+
+        if(trait != null) {
+            propertyValues = applyTraitProperties(trait, propertyValues);
+            fieldValues = applyTraitFields(trait, fieldValues);
+        }
+
+        setProperties(object, propertyValues);
+        setFields(object, fieldValues);
 
         executeCallbacks(AfterFactoryBuild.class, object);
         return object;
@@ -42,16 +55,8 @@ public abstract class ObjectFactory<T> {
 
     protected abstract void define();
 
-    protected void field(String name, Object value) {
-        defaultFieldValues.put(name, value);
-    }
-
-    protected void property(String name, Object value) {
-        defaultPropertyValues.put(name, value);
-    }
-
-    protected static int rand(int max) {
-        return new Random().nextInt(max);
+    protected void trait(Trait trait) {
+        traits.put(trait.getName(), trait);
     }
 
     /** Protected methods **/
@@ -97,9 +102,9 @@ public abstract class ObjectFactory<T> {
         }
     }
 
-    private void setFields(T object) {
-        for(String field : defaultFieldValues.keySet()) {
-            Object value = defaultFieldValues.get(field);
+    private void setFields(T object, Map<String, Object> fieldValues) {
+        for(String field : fieldValues.keySet()) {
+            Object value = fieldValues.get(field);
             setField(object, field, value);
         }
     }
@@ -125,5 +130,19 @@ public abstract class ObjectFactory<T> {
         }
 
         return propertyValues;
+    }
+
+    private Map<String, Object> applyTraitProperties(String traitName, Map<String,Object> propertyValues) {
+        Trait trait = traits.get(traitName);
+        propertyValues.putAll(trait.getDefaultPropertyValues());
+
+        return propertyValues;
+    }
+
+    private Map<String, Object> applyTraitFields(String traitName, Map<String, Object> fieldValues) {
+        Trait trait = traits.get(traitName);
+        fieldValues.putAll(trait.getDefaultFieldValues());
+
+        return fieldValues;
     }
 }

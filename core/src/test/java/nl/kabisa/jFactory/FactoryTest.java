@@ -9,9 +9,12 @@ import static nl.kabisa.jFactory.Factory.getFactory;
 
 public class FactoryTest {
 
+    private ArticleFactory factory;
+
     @Before
     public void setup() {
         Factory.addFactoryScanPackage("nl.kabisa.jFactory");
+        factory = getFactory(Article.class);
     }
 
     @Test
@@ -24,12 +27,20 @@ public class FactoryTest {
 
     @Test
     public void factory() {
-        ArticleFactory factory = getFactory(Article.class);
-
         Article article = factory.build("title", "test");
         assertEquals("test", article.getTitle());
 
         article = factory.build("title", "test2");
         assertEquals("test2", article.getTitle());
+    }
+
+    @Test
+    public void traits() {
+        Article article = factory.build("read", "title", "test");
+        assertEquals(true, article.isRead());
+        assertEquals("test", article.getTitle());
+
+        article = build(Article.class, "unread");
+        assertEquals(false, article.isRead());
     }
 }

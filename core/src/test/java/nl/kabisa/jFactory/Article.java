@@ -4,6 +4,7 @@ public class Article {
 
     private String guid;
     private String title;
+    private boolean read;
 
     public String getGuid() {
         return guid;
@@ -19,6 +20,14 @@ public class Article {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     @Override
