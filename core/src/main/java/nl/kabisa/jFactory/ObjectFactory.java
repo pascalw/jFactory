@@ -98,6 +98,10 @@ public abstract class ObjectFactory<T> extends BasicFactory {
     private void setProperties(T object, Map<String, Object> propertyValues) {
         for(String property: propertyValues.keySet()) {
             Object value = propertyValues.get(property);
+            if(value instanceof Sequence) {
+                value = ((Sequence) value).apply(currentSequence(property)); //lazy evaluate sequence. TODO: move to parent + see how to make this nicer/more general
+            }
+
             setProperty(object, property, value);
         }
     }

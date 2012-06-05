@@ -2,9 +2,18 @@ package nl.kabisa.jFactory;
 
 public class Article {
 
+    private int id;
     private String guid;
     private String title;
     private boolean read;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getGuid() {
         return guid;

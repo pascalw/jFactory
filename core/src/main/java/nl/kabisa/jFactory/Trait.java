@@ -13,5 +13,5 @@ public abstract class Trait extends BasicFactory {
         return name;
     }
 
-    protected abstract void define();
+    abstract void define();
 }

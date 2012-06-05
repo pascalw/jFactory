@@ -18,6 +18,17 @@ public class FactoryTest {
     }
 
     @Test
+    public void sequences() {
+        assertEquals("Article 1", build(Article.class).getTitle());
+        assertEquals("Article 2", build(Article.class).getTitle());
+        assertEquals("Article 3", build(Article.class).getTitle());
+
+        assertEquals(1, build(Item.class).getQuantity());
+        assertEquals(2, build(Item.class).getQuantity());
+        assertEquals(3, build(Item.class).getQuantity());
+    }
+
+    @Test
     public void buildObject() {
         Article article = build(Article.class, "title", "foobar", "guid", "test");
 

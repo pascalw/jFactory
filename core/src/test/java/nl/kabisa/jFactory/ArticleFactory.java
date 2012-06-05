@@ -9,20 +9,33 @@ public class ArticleFactory extends ObjectFactory<Article> {
     @Override
     protected void define() {
         property("guid", "http://kabisa.nl");
-        property("title", "Test");
 
         trait(new Trait("read") {
-            @Override
-            public void define() {
+            void define() {
                 field("read", true);
             }
         });
 
         trait(new Trait("unread") {
-            @Override
-            protected void define() {
+            void define() {
                 field("read", false);
             }
         });
+
+        sequence("id", new Sequence() {
+            public Object apply(int n) {
+                return n;
+            }
+        });
+
+        sequence("title", new Sequence() {
+            public Object apply(int n) {
+                return String.format("Article %d", n);
+            }
+        });
+    }
+
+    protected void foo() {
+        System.out.println("Hai");
     }
 }
