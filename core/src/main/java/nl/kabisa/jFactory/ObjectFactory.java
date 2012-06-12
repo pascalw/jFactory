@@ -37,28 +37,28 @@ public abstract class ObjectFactory<T> extends BasicFactory {
             attributes = Arrays.copyOfRange(attributes, 1, attributes.length);
         }
 
-        Map<String, Object> propertyValues = createObjectPropertyValues(defaultPropertyValues, attributes);
-        Map<String, Object> fieldValues = newHashMap(defaultFieldValues);
+        Map<String, Object> propertyValues = createObjectPropertyValues(this.propertyValues, attributes);
+        Map<String, Object> fieldValues = newHashMap(this.fieldValues);
 
         if(trait != null) {
             // a trait was defined, apply it
-            Map<String, Object> currentProperties = newHashMap(defaultPropertyValues);
-            Map<String, Object> currentFields = newHashMap(defaultFieldValues);
+            Map<String, Object> currentProperties = newHashMap(this.propertyValues);
+            Map<String, Object> currentFields = newHashMap(this.fieldValues);
 
             Trait t = traits.get(trait);
             t.define();
 
             // capture changed properties and fields
-            Map<String, Object> traitFieldValues = Maps.difference(defaultFieldValues, currentFields).entriesOnlyOnLeft();
-            Map<String, Object> traitPropertyValues = Maps.difference(defaultPropertyValues, currentProperties).entriesOnlyOnLeft();
+            Map<String, Object> traitFieldValues = Maps.difference(this.fieldValues, currentFields).entriesOnlyOnLeft();
+            Map<String, Object> traitPropertyValues = Maps.difference(this.propertyValues, currentProperties).entriesOnlyOnLeft();
 
             // merge
             propertyValues.putAll(traitPropertyValues);
             fieldValues.putAll(traitFieldValues);
 
             // reset
-            defaultFieldValues = currentFields;
-            defaultPropertyValues = currentProperties;
+            this.fieldValues = currentFields;
+            this.propertyValues = currentProperties;
         }
 
         setProperties(object, propertyValues);

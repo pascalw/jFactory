@@ -8,33 +8,25 @@ import static com.google.common.collect.Maps.newHashMap;
 
 abstract class BasicFactory {
 
-    protected Map<String, Object> defaultPropertyValues = newHashMap();
-    protected Map<String, Object> defaultFieldValues = newHashMap();
+    protected Map<String, Object> propertyValues = newHashMap();
+    protected Map<String, Object> fieldValues = newHashMap();
 
     protected static Map<Class, Map<String, Integer>> sequences = newHashMap();
 
     protected void field(String name, Object value) {
-        defaultFieldValues.put(name, value);
+        fieldValues.put(name, value);
     }
 
     protected void property(String name, Object value) {
-        defaultPropertyValues.put(name, value);
+        propertyValues.put(name, value);
     }
 
     protected void sequence(String name, Sequence seq) {
-        defaultPropertyValues.put(name, seq);
+        propertyValues.put(name, seq);
     }
 
     protected static int rand(int max) {
         return new Random().nextInt(max);
-    }
-
-    protected Map<String, Object> getDefaultPropertyValues() {
-        return defaultPropertyValues;
-    }
-
-    protected Map<String, Object> getDefaultFieldValues() {
-        return defaultFieldValues;
     }
 
     protected int currentSequence(String name) {

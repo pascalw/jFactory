@@ -3,6 +3,8 @@ package nl.kabisa.jFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static junit.framework.Assert.assertEquals;
 import static nl.kabisa.jFactory.Factory.build;
 
@@ -49,5 +51,16 @@ public class FactoryTest {
 
         article = build(Article.class, "unread");
         assertEquals(false, article.isRead());
+    }
+
+    @Test
+    public void reuseFactories() {
+        ArticleFactory factory = new ArticleFactory();
+
+        Article article1 = factory.build("read");
+        assertEquals(true, article1.isRead());
+
+        Article article2 = factory.build("unread");
+        assertEquals(false, article2.isRead());
     }
 }
