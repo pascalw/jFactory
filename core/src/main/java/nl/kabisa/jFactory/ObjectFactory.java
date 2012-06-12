@@ -1,5 +1,6 @@
 package nl.kabisa.jFactory;
 
+import com.google.common.collect.Maps;
 import nl.kabisa.jFactory.annotations.AfterFactoryBuild;
 
 import java.lang.annotation.Annotation;
@@ -40,8 +41,24 @@ public abstract class ObjectFactory<T> extends BasicFactory {
         Map<String, Object> fieldValues = newHashMap(defaultFieldValues);
 
         if(trait != null) {
-            propertyValues = applyTraitProperties(trait, propertyValues);
-            fieldValues = applyTraitFields(trait, fieldValues);
+            // a trait was defined, apply it
+            Map<String, Object> currentProperties = newHashMap(defaultPropertyValues);
+            Map<String, Object> currentFields = newHashMap(defaultFieldValues);
+
+            Trait t = traits.get(trait);
+            t.define();
+
+            // capture changed properties and fields
+            Map<String, Object> traitFieldValues = Maps.difference(defaultFieldValues, currentFields).entriesOnlyOnLeft();
+            Map<String, Object> traitPropertyValues = Maps.difference(defaultPropertyValues, currentProperties).entriesOnlyOnLeft();
+
+            // merge
+            propertyValues.putAll(traitPropertyValues);
+            fieldValues.putAll(traitFieldValues);
+
+            // reset
+            defaultFieldValues = currentFields;
+            defaultPropertyValues = currentProperties;
         }
 
         setProperties(object, propertyValues);
@@ -134,19 +151,5 @@ public abstract class ObjectFactory<T> extends BasicFactory {
         }
 
         return propertyValues;
-    }
-
-    private Map<String, Object> applyTraitProperties(String traitName, Map<String,Object> propertyValues) {
-        Trait trait = traits.get(traitName);
-        propertyValues.putAll(trait.getDefaultPropertyValues());
-
-        return propertyValues;
-    }
-
-    private Map<String, Object> applyTraitFields(String traitName, Map<String, Object> fieldValues) {
-        Trait trait = traits.get(traitName);
-        fieldValues.putAll(trait.getDefaultFieldValues());
-
-        return fieldValues;
     }
 }

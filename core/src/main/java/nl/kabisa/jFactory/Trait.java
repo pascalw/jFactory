@@ -1,12 +1,11 @@
 package nl.kabisa.jFactory;
 
-public abstract class Trait extends BasicFactory {
+public abstract class Trait {
 
     private String name;
 
     public Trait(String name) {
         this.name = name;
-        define();
     }
 
     public String getName() {

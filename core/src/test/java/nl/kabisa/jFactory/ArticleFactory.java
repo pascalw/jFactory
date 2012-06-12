@@ -27,15 +27,10 @@ public class ArticleFactory extends ObjectFactory<Article> {
                 return n;
             }
         });
-
         sequence("title", new Sequence() {
             public Object apply(int n) {
                 return String.format("Article %d", n);
             }
         });
-    }
-
-    protected void foo() {
-        System.out.println("Hai");
     }
 }

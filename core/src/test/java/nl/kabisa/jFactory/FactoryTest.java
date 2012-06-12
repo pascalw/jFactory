@@ -5,16 +5,12 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static nl.kabisa.jFactory.Factory.build;
-import static nl.kabisa.jFactory.Factory.getFactory;
 
 public class FactoryTest {
-
-    private ArticleFactory factory;
 
     @Before
     public void setup() {
         Factory.addFactoryScanPackage("nl.kabisa.jFactory");
-        factory = getFactory(Article.class);
     }
 
     @Test
@@ -38,16 +34,16 @@ public class FactoryTest {
 
     @Test
     public void factory() {
-        Article article = factory.build("title", "test");
+        Article article = build(Article.class, "title", "test");
         assertEquals("test", article.getTitle());
 
-        article = factory.build("title", "test2");
+        article = build(Article.class, "title", "test2");
         assertEquals("test2", article.getTitle());
     }
 
     @Test
     public void traits() {
-        Article article = factory.build("read", "title", "test");
+        Article article = build(Article.class, "read", "title", "test");
         assertEquals(true, article.isRead());
         assertEquals("test", article.getTitle());
 
