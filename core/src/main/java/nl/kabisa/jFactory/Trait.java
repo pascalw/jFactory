@@ -12,5 +12,5 @@ public abstract class Trait {
         return name;
     }
 
-    abstract void define();
+    abstract void apply();
 }

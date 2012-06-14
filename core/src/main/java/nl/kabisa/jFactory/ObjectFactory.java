@@ -46,7 +46,7 @@ public abstract class ObjectFactory<T> extends BasicFactory {
             Map<String, Object> currentFields = newHashMap(this.fieldValues);
 
             Trait t = traits.get(trait);
-            t.define();
+            t.apply();
 
             // capture changed properties and fields
             Map<String, Object> traitFieldValues = Maps.difference(this.fieldValues, currentFields).entriesOnlyOnLeft();

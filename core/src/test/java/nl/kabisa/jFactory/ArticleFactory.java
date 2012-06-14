@@ -11,13 +11,13 @@ public class ArticleFactory extends ObjectFactory<Article> {
         property("guid", "http://kabisa.nl");
 
         trait(new Trait("read") {
-            void define() {
+            void apply() {
                 field("read", true);
             }
         });
 
         trait(new Trait("unread") {
-            void define() {
+            void apply() {
                 field("read", false);
             }
         });
