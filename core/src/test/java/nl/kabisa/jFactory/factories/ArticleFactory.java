@@ -1,4 +1,9 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.factories;
+
+import nl.kabisa.jFactory.ObjectFactory;
+import nl.kabisa.jFactory.models.Article;
+import nl.kabisa.jFactory.types.Sequence;
+import nl.kabisa.jFactory.types.Trait;
 
 public class ArticleFactory extends ObjectFactory<Article> {
 
@@ -11,13 +16,13 @@ public class ArticleFactory extends ObjectFactory<Article> {
         property("guid", "http://kabisa.nl");
 
         trait(new Trait("read") {
-            void apply() {
+            public void apply() {
                 field("read", true);
             }
         });
 
         trait(new Trait("unread") {
-            void apply() {
+            public void apply() {
                 field("read", false);
             }
         });
@@ -27,6 +32,7 @@ public class ArticleFactory extends ObjectFactory<Article> {
                 return n;
             }
         });
+
         sequence("title", new Sequence() {
             public Object apply(int n) {
                 return String.format("Article %d", n);

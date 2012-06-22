@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.utils;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-class ReflectionUtils {
+public class ReflectionUtils {
 
     /**
      * Set the property identified by name to the provided value.
@@ -18,7 +18,7 @@ class ReflectionUtils {
      * @param value
      * @return true on success, false if property wasn't found.
      */
-    protected static boolean setProperty(Object target, String name, Object value) {
+    public static boolean setProperty(Object target, String name, Object value) {
         try {
             for (PropertyDescriptor pd : Introspector.getBeanInfo(target.getClass()).getPropertyDescriptors()) {
                 if (pd.getWriteMethod() != null && pd.getName().equals(name)) {
@@ -40,7 +40,7 @@ class ReflectionUtils {
      * @param value
      * @return true on success, false if field wasn't found.
      */
-    protected static boolean setField(Object target, String name, Object value) {
+    public static boolean setField(Object target, String name, Object value) {
         try {
             Field field = target.getClass().getDeclaredField(name);
             field.setAccessible(true);
@@ -60,7 +60,7 @@ class ReflectionUtils {
      * @param annotationType
      * @return
      */
-    protected static List<Method> getAnnotatedMethods(Class targetClass, Class<? extends Annotation> annotationType) {
+    public static List<Method> getAnnotatedMethods(Class targetClass, Class<? extends Annotation> annotationType) {
         List<Method> annotatedMethods = newArrayList();
 
         for(Method method : targetClass.getDeclaredMethods()) {
@@ -80,7 +80,7 @@ class ReflectionUtils {
      * @param method
      * @param arguments
      */
-    protected static void invokeMethod(Object target, Method method, Object... arguments) {
+    public static void invokeMethod(Object target, Method method, Object... arguments) {
         method.setAccessible(true); // so we can call private and protected methods too
 
         try {
@@ -97,7 +97,7 @@ class ReflectionUtils {
      * @param <T>
      * @return
      */
-    protected static <T> T createObject(Class<T> clazz) {
+    public static <T> T createObject(Class<T> clazz) {
         T object;
 
         try {

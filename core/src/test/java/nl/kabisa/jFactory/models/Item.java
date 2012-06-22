@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.models;
 
 public class Item {
 

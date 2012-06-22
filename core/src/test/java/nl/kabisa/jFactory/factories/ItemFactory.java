@@ -1,4 +1,8 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.factories;
+
+import nl.kabisa.jFactory.ObjectFactory;
+import nl.kabisa.jFactory.models.Item;
+import nl.kabisa.jFactory.types.Sequence;
 
 public class ItemFactory extends ObjectFactory<Item> {
 

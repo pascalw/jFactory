@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.types;
 
 public abstract class Trait {
 
@@ -12,5 +12,5 @@ public abstract class Trait {
         return name;
     }
 
-    abstract void apply();
+    abstract public void apply();
 }

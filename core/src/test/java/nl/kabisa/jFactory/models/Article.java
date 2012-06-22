@@ -1,4 +1,6 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.models;
+
+import java.util.Date;
 
 public class Article {
 

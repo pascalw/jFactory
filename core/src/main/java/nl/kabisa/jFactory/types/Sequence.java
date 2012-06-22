@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory;
+package nl.kabisa.jFactory.types;
 
 public interface Sequence {
 

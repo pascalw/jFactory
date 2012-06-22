@@ -1,5 +1,7 @@
 package nl.kabisa.jFactory;
 
+import nl.kabisa.jFactory.types.Sequence;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;

@@ -2,6 +2,10 @@ package nl.kabisa.jFactory;
 
 import com.google.common.collect.Maps;
 import nl.kabisa.jFactory.annotations.AfterFactoryBuild;
+import nl.kabisa.jFactory.types.LazyValue;
+import nl.kabisa.jFactory.types.Sequence;
+import nl.kabisa.jFactory.types.Trait;
+import nl.kabisa.jFactory.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -102,14 +106,14 @@ public abstract class ObjectFactory<T> extends BasicFactory {
     /** Private methods **/
 
     private void setProperty(Object target, String name, Object value) {
-        if(! ReflectionUtils.setProperty(target, name, value)) {
+        if(! ReflectionUtils.setProperty(target, name, getValue(value))) {
             // no property was found, try to set the field directly
             setField(target, name, value);
         }
     }
 
     private void setField(Object target, String name, Object value) {
-        ReflectionUtils.setField(target, name, value);
+        ReflectionUtils.setField(target, name, getValue(value));
     }
 
     private void setProperties(T object, Map<String, Object> propertyValues) {
@@ -128,6 +132,10 @@ public abstract class ObjectFactory<T> extends BasicFactory {
             Object value = fieldValues.get(field);
             setField(object, field, value);
         }
+    }
+
+    private Object getValue(Object value) {
+        return value instanceof LazyValue ? ((LazyValue) value).evaluate() : value;
     }
 
     private Map<String, Object> createObjectPropertyValues(Map<String, Object> defaultPropertyValues, Object... attributes) {
