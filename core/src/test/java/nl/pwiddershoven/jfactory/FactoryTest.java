@@ -46,6 +46,11 @@ public class FactoryTest {
         // apply the unread trait
         article = build(Article.class, "unread");
         assertEquals(false, article.isRead());
+
+        // if the first attribute matches both the name of a trait and the name of a property, the trait should not be
+        // applied if there's also a value given
+        article = build(Article.class, "read", false);
+        assertEquals(false, article.isRead());
     }
 
     @Test

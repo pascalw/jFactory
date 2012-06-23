@@ -41,8 +41,10 @@ public abstract class ObjectFactory<T> {
 
         String trait = null;
 
-        // check if the first attribute matches the name of a defined trait
-        if(attributes.length > 0 && traits.containsKey((String)attributes[0])) {
+        // check if the first attribute matches the name of a defined trait.
+        // Also check if the number of attributes is odd. If it's even, we'll assume it's a number of key/value pairs
+        // for properties and not meant to apply a trait.
+        if(attributes.length > 0 && attributes.length %2 != 0 && traits.containsKey((String)attributes[0])) {
             // the first attribute matched the name of a defined trait, assume the trait was meant to be applied
             trait = (String)attributes[0];
 
