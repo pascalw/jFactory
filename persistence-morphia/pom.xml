@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>jFactory</artifactId>
-        <groupId>nl.kabisa.jFactory</groupId>
+        <groupId>nl.pwiddershoven.jfactory</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -21,7 +21,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>nl.kabisa.jFactory</groupId>
+            <groupId>nl.pwiddershoven.jfactory</groupId>
             <artifactId>core</artifactId>
             <scope>compile</scope>
             <version>1.0-SNAPSHOT</version>
