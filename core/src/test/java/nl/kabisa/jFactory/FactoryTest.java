@@ -67,15 +67,4 @@ public class FactoryTest {
         article = build(Article.class, "unread");
         assertEquals(false, article.isRead());
     }
-
-    @Test
-    public void reuseFactories() {
-        ArticleFactory factory = new ArticleFactory();
-
-        Article article1 = factory.build("read");
-        assertEquals(true, article1.isRead());
-
-        Article article2 = factory.build("unread");
-        assertEquals(false, article2.isRead());
-    }
 }

@@ -17,13 +17,13 @@ public class ArticleFactory extends ObjectFactory<Article> {
 
         trait(new Trait("read") {
             public void apply() {
-                field("read", true);
+                property("read", true);
             }
         });
 
         trait(new Trait("unread") {
             public void apply() {
-                field("read", false);
+                property("read", false);
             }
         });
 
