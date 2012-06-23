@@ -3,9 +3,15 @@ package nl.kabisa.jFactory;
 import nl.kabisa.jFactory.factories.OrderFactory;
 import nl.kabisa.jFactory.models.Article;
 import nl.kabisa.jFactory.models.Item;
+import nl.kabisa.jFactory.utils.ReflectionUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.reflections.Reflections;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
+import static com.google.common.collect.Maps.newHashMap;
 import static junit.framework.Assert.assertEquals;
 import static nl.kabisa.jFactory.Factory.build;
 
@@ -57,7 +63,12 @@ public class FactoryTest {
     }
 
     @Test
-    public void sequences() {
+    public void sequences() throws Exception {
+        // reset all sequences, so we can assume the first built object in this test has a sequence value of 1
+        Field field = ObjectFactory.class.getDeclaredField("sequences");
+        field.setAccessible(true);
+        field.set(null, newHashMap());
+
         assertEquals("Article 1", build(Article.class).getTitle());
         assertEquals("Article 2", build(Article.class).getTitle());
         assertEquals("Article 3", build(Article.class).getTitle());

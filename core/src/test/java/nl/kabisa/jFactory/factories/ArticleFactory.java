@@ -1,6 +1,7 @@
 package nl.kabisa.jFactory.factories;
 
 import nl.kabisa.jFactory.ObjectFactory;
+import nl.kabisa.jFactory.annotations.AfterFactoryBuild;
 import nl.kabisa.jFactory.models.Article;
 import nl.kabisa.jFactory.types.Sequence;
 import nl.kabisa.jFactory.types.Trait;
