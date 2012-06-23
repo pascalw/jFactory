@@ -1,20 +1,13 @@
 package nl.pwiddershoven.jfactory;
 
-import com.google.common.base.Preconditions;
-import org.reflections.Reflections;
-
+import nl.pwiddershoven.jfactory.utils.ReflectionUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
+import java.util.*;
 
 public class Factory {
 
-    private static List<String> factoryPackages = newArrayList();
+    private static List<String> factoryPackages = new ArrayList<String>();
     private static Map<Class<?>, Class<?extends ObjectFactory>> factoryClasses;
 
     public static void addFactoryScanPackage(String factoriesPackage) {
@@ -22,17 +15,17 @@ public class Factory {
     }
 
     public static <T> T build(Class<T> objectClass, Object... attributes) {
-        ObjectFactory<T> objectFactory = getFactory(objectClass, attributes);
+        ObjectFactory<T> objectFactory = getFactory(objectClass);
         return objectFactory.build(attributes);
     }
 
     public static <T> T create(Class<T> objectClass, Object... attributes) {
-        PersistableObjectFactory<T> objectFactory = getFactory(objectClass, attributes);
+        PersistableObjectFactory<T> objectFactory = getFactory(objectClass);
         return objectFactory.create(attributes);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getFactory(final Class<?> factoryClass, Object... attributes) {
+    public static <T> T getFactory(final Class<?> factoryClass) {
         Class<?extends ObjectFactory> factory = getFactoryClass(factoryClass);
 
         try {
@@ -50,13 +43,11 @@ public class Factory {
      * @return
      */
     private static Class<?extends ObjectFactory> getFactoryClass(Class<?> factoryClass) {
-        Preconditions.checkArgument(factoryPackages.size() != 0, "No package provide to look for factories.");
+        if(factoryPackages.size() == 0) throw new IllegalArgumentException("No package provide to look for factories.");
 
         if(factoryClasses == null) {
-            factoryClasses = newHashMap();
-
-            Reflections reflections = new Reflections(factoryPackages);
-            Set<Class<?extends ObjectFactory>> classes = reflections.getSubTypesOf(ObjectFactory.class);
+            factoryClasses = new HashMap<Class<?>, Class<? extends ObjectFactory>>();
+            Set<Class<?extends ObjectFactory>> classes = ReflectionUtils.getSubclassesOf(ObjectFactory.class, factoryPackages);
 
             for(Class<?extends ObjectFactory> clazz : classes) {
                 if(! Modifier.isAbstract(clazz.getModifiers())) {

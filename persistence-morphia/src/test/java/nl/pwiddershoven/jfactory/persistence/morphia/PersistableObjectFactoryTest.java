@@ -18,7 +18,7 @@ public class PersistableObjectFactoryTest {
 
     @Before
     public void setup() {
-        Factory.addFactoryScanPackage("nl.pwiddershoven.jfactory");
+        Factory.addFactoryScanPackage("nl.pwiddershoven.jfactory.persistence.morphia.factories");
         MorphiaBackedPersistableObjectFactory.setDatastore(datastore);
     }
 

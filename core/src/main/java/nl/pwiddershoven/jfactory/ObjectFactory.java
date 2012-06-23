@@ -1,6 +1,5 @@
 package nl.pwiddershoven.jfactory;
 
-import com.google.common.collect.Maps;
 import nl.pwiddershoven.jfactory.annotations.AfterFactoryBuild;
 import nl.pwiddershoven.jfactory.types.LazyValue;
 import nl.pwiddershoven.jfactory.types.Sequence;
@@ -11,18 +10,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static com.google.common.collect.Maps.newHashMap;
-
 public abstract class ObjectFactory<T> {
 
     private Class<T> factoryClass;
-    private Map<String, Trait> traits = newHashMap();
-    private Map<String, Object> propertyValues = newHashMap();
-    private Map<String, Object> fieldValues = newHashMap();
+    private Map<String, Trait> traits = new HashMap<String, Trait>();
+    private Map<String, Object> propertyValues = new HashMap<String, Object>();
+    private Map<String, Object> fieldValues = new HashMap<String, Object>();
 
     // map of sequences by name for factory classes
-    private static Map<Class, Map<String, Integer>> sequences = newHashMap();
+    private static Map<Class, Map<String, Integer>> sequences = new HashMap<Class, Map<String, Integer>>();
 
     /** Public **/
 
@@ -124,7 +120,7 @@ public abstract class ObjectFactory<T> {
 
     protected void executeCallbacks(Class<? extends Annotation> annotationType, T object) {
         //first gather a list of all methods down the inheritance chain which applied the given annotation
-        List<Method> annotatedMethods = newArrayList();
+        List<Method> annotatedMethods = new ArrayList<Method>();
 
         Class clz = getClass();
         while(ObjectFactory.class.isAssignableFrom(clz)) {
@@ -181,10 +177,10 @@ public abstract class ObjectFactory<T> {
      * @return
      */
     private Map<String, Object> createObjectPropertyValues(Map<String, Object> defaultPropertyValues, Object... attributes) {
-        Map<String, Object> propertyValues = newHashMap(defaultPropertyValues);
+        Map<String, Object> propertyValues = new HashMap<String, Object>(defaultPropertyValues);
 
         if(attributes != null) {
-            Iterator<Object> iterator = newArrayList(attributes).iterator();
+            Iterator<Object> iterator = Arrays.asList(attributes).iterator();
             Map<String, Object> propertyOverrideMap = new HashMap<String, Object>();
 
             while(iterator.hasNext()) {

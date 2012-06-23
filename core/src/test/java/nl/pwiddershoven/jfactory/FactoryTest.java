@@ -3,15 +3,12 @@ package nl.pwiddershoven.jfactory;
 import nl.pwiddershoven.jfactory.factories.OrderFactory;
 import nl.pwiddershoven.jfactory.models.Article;
 import nl.pwiddershoven.jfactory.models.Item;
-import nl.pwiddershoven.jfactory.utils.ReflectionUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Field;
-import java.util.Map;
+import java.util.HashMap;
 
-import static com.google.common.collect.Maps.newHashMap;
 import static junit.framework.Assert.assertEquals;
 import static nl.pwiddershoven.jfactory.Factory.build;
 
@@ -72,7 +69,7 @@ public class FactoryTest {
         // reset all sequences, so we can assume the first built object in this test has a sequence value of 1
         Field field = ObjectFactory.class.getDeclaredField("sequences");
         field.setAccessible(true);
-        field.set(null, newHashMap());
+        field.set(null, new HashMap());
 
         assertEquals("Article 1", build(Article.class).getTitle());
         assertEquals("Article 2", build(Article.class).getTitle());
