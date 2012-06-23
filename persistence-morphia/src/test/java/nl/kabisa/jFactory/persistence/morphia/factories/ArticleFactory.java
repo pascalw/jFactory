@@ -1,5 +1,7 @@
-package nl.kabisa.jFactory.persistence.morphia;
+package nl.kabisa.jFactory.persistence.morphia.factories;
 
+import nl.kabisa.jFactory.persistence.morphia.MorphiaBackedPersistableObjectFactory;
+import nl.kabisa.jFactory.persistence.morphia.models.PersistableArticle;
 import org.bson.types.ObjectId;
 
 public class ArticleFactory extends MorphiaBackedPersistableObjectFactory<PersistableArticle> {

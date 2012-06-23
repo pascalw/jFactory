@@ -1,4 +1,4 @@
-package nl.kabisa.jFactory.persistence.morphia;
+package nl.kabisa.jFactory.persistence.morphia.models;
 
 import com.google.code.morphia.annotations.Id;
 import org.bson.types.ObjectId;

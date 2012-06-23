@@ -13,7 +13,7 @@ public class ArticleFactory extends ObjectFactory<Article> {
 
     @Override
     protected void define() {
-        property("guid", "http://kabisa.nl");
+        property("guid", "http://pwiddershoven.nl/blog/2011/01/05/airplayer.html");
 
         trait(new Trait("read") {
             public void apply() {

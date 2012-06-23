@@ -1,6 +1,8 @@
 package nl.kabisa.jFactory.persistence.morphia;
 
 import com.google.code.morphia.Datastore;
+import nl.kabisa.jFactory.Factory;
+import nl.kabisa.jFactory.persistence.morphia.models.PersistableArticle;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,7 @@ public class PersistableObjectFactoryTest {
 
     @Before
     public void setup() {
-        addFactoryScanPackage("nl.kabisa.jFactory");
+        Factory.addFactoryScanPackage("nl.kabisa.jFactory.factories");
         MorphiaBackedPersistableObjectFactory.setDatastore(datastore);
     }
 
