@@ -29,4 +29,7 @@ public class ItemFactory extends ObjectFactory<Item> {
     public void afterBuild(Item item) {
         item.setName("callback");
     }
+
+    @AfterFactoryBuild
+    public void afterBuild2(Item item) {}
 }

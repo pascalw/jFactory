@@ -7,6 +7,7 @@ import org.jfactory.models.Article;
 import org.jfactory.models.Item;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InOrder;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -14,8 +15,8 @@ import java.util.HashMap;
 import static junit.framework.Assert.assertEquals;
 import static org.jfactory.Factory.build;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
 
 public class FactoryTest {
 
@@ -90,7 +91,11 @@ public class FactoryTest {
         ItemFactory factory = spy(new ItemFactory());
         Item item = factory.build();
 
-        verify(factory).afterBuild(eq(item));
+        InOrder inOrder = inOrder(factory);
+
+        // you can define multiple callbacks of the same time, they will be called the order they are defined
+        inOrder.verify(factory).afterBuild(eq(item));
+        inOrder.verify(factory).afterBuild2(eq(item));
         assertEquals("callback", item.getName());
     }
 }
