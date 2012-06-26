@@ -1,6 +1,7 @@
 package org.jfactory;
 
 import junit.framework.Assert;
+import org.jfactory.factories.ItemFactory;
 import org.jfactory.factories.OrderFactory;
 import org.jfactory.models.Article;
 import org.jfactory.models.Item;
@@ -12,6 +13,9 @@ import java.util.HashMap;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jfactory.Factory.build;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class FactoryTest {
 
@@ -79,5 +83,14 @@ public class FactoryTest {
         assertEquals(1, build(Item.class).getQuantity());
         assertEquals(2, build(Item.class).getQuantity());
         assertEquals(3, build(Item.class).getQuantity());
+    }
+
+    @Test
+    public void callbacks() {
+        ItemFactory factory = spy(new ItemFactory());
+        Item item = factory.build();
+
+        verify(factory).afterBuild(eq(item));
+        assertEquals("callback", item.getName());
     }
 }

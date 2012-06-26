@@ -1,6 +1,7 @@
 package org.jfactory;
 
 import org.jfactory.annotations.AfterFactoryCreate;
+import org.jfactory.annotations.BeforeFactoryCreate;
 
 /**
  * Abstract class that provides functionality for building objects that can be persisted through some persistence layer.
@@ -25,10 +26,13 @@ public abstract class PersistableObjectFactory<T> extends ObjectFactory<T> {
         // build
         T object = build(attributes);
 
+        // excute beforeCreate callback
+        executeCallbacks(BeforeFactoryCreate.class, object);
+
         // persist
         persist(object);
 
-        // execute callbacks
+        // execute after create callback
         executeCallbacks(AfterFactoryCreate.class, object);
 
         // return
