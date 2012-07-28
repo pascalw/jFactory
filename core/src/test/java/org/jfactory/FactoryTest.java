@@ -98,4 +98,13 @@ public class FactoryTest {
         inOrder.verify(factory).afterBuild2(eq(item));
         assertEquals("callback", item.getName());
     }
+
+    @Test
+    public void innerFactories() {
+        // Inner factories can be used to group multiple traits and alias them
+        Article article = build(Article.class, "publishedRead");
+
+        assertEquals(true, article.isRead());
+        assertEquals(Article.State.PUBLISHED, article.getState());
+    }
 }

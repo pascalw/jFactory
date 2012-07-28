@@ -5,6 +5,8 @@ import org.jfactory.models.Article;
 import org.jfactory.types.Sequence;
 import org.jfactory.types.Trait;
 
+import static org.jfactory.Factory.traits;
+
 public class ArticleFactory extends ObjectFactory<Article> {
 
     public ArticleFactory() {
@@ -27,6 +29,20 @@ public class ArticleFactory extends ObjectFactory<Article> {
             }
         });
 
+        trait(new Trait("published") {
+            @Override
+            public void apply() {
+                property("state", Article.State.PUBLISHED);
+            }
+        });
+
+        trait(new Trait("unpublished") {
+            @Override
+            public void apply() {
+                property("state", Article.State.UNPUBLISHED);
+            }
+        });
+
         sequence("id", new Sequence() {
             public Object apply(int n) {
                 return n;
@@ -38,5 +54,7 @@ public class ArticleFactory extends ObjectFactory<Article> {
                 return String.format("Article %d", n);
             }
         });
+
+        factory("publishedRead", traits("published", "read"));
     }
 }

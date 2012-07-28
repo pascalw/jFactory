@@ -14,6 +14,7 @@ public abstract class ObjectFactory<T> {
 
     private Class<T> factoryClass;
     private Map<String, Trait> traits = new HashMap<String, Trait>();
+    private Map<String, String[]> innerFactories = new HashMap<String, String[]>();
     private Map<String, Object> propertyValues = new HashMap<String, Object>();
     private Map<String, Object> fieldValues = new HashMap<String, Object>();
 
@@ -35,27 +36,12 @@ public abstract class ObjectFactory<T> {
     public T build(Object... attributes) {
         T object = ReflectionUtils.createObject(factoryClass);
 
-        String trait = null;
-
-        // check if the first attribute matches the name of a defined trait.
-        // Also check if the number of attributes is odd. If it's even, we'll assume it's a number of key/value pairs
-        // for properties and not meant to apply a trait.
-        if(attributes.length > 0 && attributes.length %2 != 0 && traits.containsKey((String)attributes[0])) {
-            // the first attribute matched the name of a defined trait, assume the trait was meant to be applied
-            trait = (String)attributes[0];
-
-            // now remove the the trait name from the list of attributes
-            attributes = Arrays.copyOfRange(attributes, 1, attributes.length);
-        }
-
-        if(trait != null) {
-            // a trait was defined, apply it
-            Trait t = traits.get(trait);
-            t.apply();
-        }
+        List<Object> attributeList = new ArrayList<Object>(Arrays.asList(attributes)); //kinda wacky but Arrays.asList returns a unmodifiable list
+        String[] traitNames = getTraitNames(attributeList);
+        applyTraits(traitNames);
 
         // merge default properties with supplied attributes
-        Map<String, Object> propertyValues = createObjectPropertyValues(this.propertyValues, attributes);
+        Map<String, Object> propertyValues = createObjectPropertyValues(this.propertyValues, attributeList);
 
         // now set properties and fields to the created object
         setProperties(object, propertyValues);
@@ -110,6 +96,10 @@ public abstract class ObjectFactory<T> {
 
     protected int rand(int max) {
         return new Random().nextInt(max);
+    }
+
+    protected void factory(String name, String[] traits) {
+        innerFactories.put(name, traits);
     }
 
     /** Protected methods **/
@@ -176,11 +166,11 @@ public abstract class ObjectFactory<T> {
      * @param attributes
      * @return
      */
-    private Map<String, Object> createObjectPropertyValues(Map<String, Object> defaultPropertyValues, Object... attributes) {
+    private Map<String, Object> createObjectPropertyValues(Map<String, Object> defaultPropertyValues, List<Object> attributes) {
         Map<String, Object> propertyValues = new HashMap<String, Object>(defaultPropertyValues);
 
         if(attributes != null) {
-            Iterator<Object> iterator = Arrays.asList(attributes).iterator();
+            Iterator<Object> iterator = attributes.iterator();
             Map<String, Object> propertyOverrideMap = new HashMap<String, Object>();
 
             while(iterator.hasNext()) {
@@ -197,6 +187,42 @@ public abstract class ObjectFactory<T> {
         }
 
         return propertyValues;
+    }
+
+    private String[] getTraitNames(List<Object> attributes) {
+        String[] traitNames = null;
+
+        // check if the first attribute matches the name of a defined trait.
+        // Also check if the number of attributes is odd. If it's even, we'll assume it's a number of key/value pairs
+        // for properties and not meant to apply a trait.
+        if(attributes.size() > 0 && attributes.size() %2 != 0) {
+            String firstAttribute = (String)attributes.get(0);
+
+            if(traits.containsKey(firstAttribute)) {
+                // the first attribute matched the name of a defined trait, assume the trait was meant to be applied
+                traitNames = new String[] {firstAttribute};
+            }else if(innerFactories.containsKey(firstAttribute)) {
+                // first attribute matched the name of a defined factory, apply it's traits
+                traitNames = innerFactories.get(firstAttribute);
+            }
+
+            if(traitNames != null) {
+                // first attribute was a valid trait name or factory, remove it from the list of attributes
+                attributes.remove(0);
+            }
+        }
+
+        return traitNames;
+    }
+
+    private void applyTraits(String[] traitNames) {
+        if(traitNames != null) {
+            // traits were defined, apply them
+            for(String traitName : traitNames) {
+                Trait t = traits.get(traitName);
+                t.apply();
+            }
+        }
     }
 
     /**

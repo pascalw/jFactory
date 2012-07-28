@@ -64,4 +64,8 @@ public class Factory {
 
         return factoryClasses.get(factoryClass);
     }
+
+    public static String[] traits(String... traits) {
+        return traits;
+    }
 }

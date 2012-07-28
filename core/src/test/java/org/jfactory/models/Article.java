@@ -2,10 +2,15 @@ package org.jfactory.models;
 
 public class Article {
 
+    public enum State {
+        PUBLISHED, UNPUBLISHED
+    }
+
     private int id;
     private String guid;
     private String title;
     private boolean read;
+    private State state;
 
     public int getId() {
         return id;
@@ -37,6 +42,14 @@ public class Article {
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     @Override
