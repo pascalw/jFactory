@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -94,6 +95,34 @@ public class ReflectionUtils {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Create an empty object of the given class.
+     * @param clazz
+     * @param constructorArgs arguments to pass to the matching constructor
+     * @param <T>
+     * @return
+     */
+    public static <T> T createObject(Class<T> clazz, Object... constructorArgs) {
+        if(constructorArgs == null) return createObject(clazz);
+
+        T object;
+
+        Class[] parameterTypes = new Class[constructorArgs.length];
+
+        for (int i = 0; i < constructorArgs.length; i++) {
+            parameterTypes[i] = constructorArgs[i].getClass();
+        }
+
+        try {
+            Constructor ctor = clazz.getConstructor(parameterTypes);
+            object = (T)ctor.newInstance(constructorArgs);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return object;
     }
 
     /**

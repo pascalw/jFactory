@@ -17,6 +17,7 @@ public abstract class ObjectFactory<T> {
     private Map<String, String[]> innerFactories = new HashMap<String, String[]>();
     private Map<String, Object> propertyValues = new HashMap<String, Object>();
     private Map<String, Object> fieldValues = new HashMap<String, Object>();
+    private Object[] constructorArgs;
 
     // map of sequences by name for factory classes
     private static Map<Class, Map<String, Integer>> sequences = new HashMap<Class, Map<String, Integer>>();
@@ -34,11 +35,12 @@ public abstract class ObjectFactory<T> {
      * @return
      */
     public T build(Object... attributes) {
-        T object = ReflectionUtils.createObject(factoryClass);
-
         List<Object> attributeList = new ArrayList<Object>(Arrays.asList(attributes)); //kinda wacky but Arrays.asList returns a unmodifiable list
+
         String[] traitNames = getTraitNames(attributeList);
         applyTraits(traitNames);
+
+        T object = ReflectionUtils.createObject(factoryClass, constructorArgs);
 
         // merge default properties with supplied attributes
         Map<String, Object> propertyValues = createObjectPropertyValues(this.propertyValues, attributeList);
@@ -100,6 +102,10 @@ public abstract class ObjectFactory<T> {
 
     protected void factory(String name, String[] traits) {
         innerFactories.put(name, traits);
+    }
+
+    protected void constructWith(Object... args) {
+        this.constructorArgs = args;
     }
 
     /** Protected methods **/

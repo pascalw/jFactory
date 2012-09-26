@@ -4,6 +4,7 @@ import junit.framework.Assert;
 import org.jfactory.factories.ItemFactory;
 import org.jfactory.factories.OrderFactory;
 import org.jfactory.models.Article;
+import org.jfactory.models.Book;
 import org.jfactory.models.Item;
 import org.junit.Before;
 import org.junit.Test;
@@ -106,5 +107,18 @@ public class FactoryTest {
 
         assertEquals(true, article.isRead());
         assertEquals(Article.State.PUBLISHED, article.getState());
+    }
+
+    @Test
+    public void constructWith() {
+        Book book = build(Book.class, "java");
+
+        assertEquals("Effective Java", book.getTitle());
+        assertEquals("Joshua Bloch", book.getAuthor());
+
+        book = build(Book.class, "camel");
+
+        assertEquals("Camel In Action", book.getTitle());
+        assertEquals("Claus Ibsen", book.getAuthor());
     }
 }
