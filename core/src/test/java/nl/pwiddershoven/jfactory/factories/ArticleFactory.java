@@ -5,8 +5,6 @@ import nl.pwiddershoven.jfactory.models.Article;
 import nl.pwiddershoven.jfactory.types.Sequence;
 import nl.pwiddershoven.jfactory.types.Trait;
 
-import static nl.pwiddershoven.jfactory.Factory.traits;
-
 public class ArticleFactory extends ObjectFactory<Article> {
 
     public ArticleFactory() {

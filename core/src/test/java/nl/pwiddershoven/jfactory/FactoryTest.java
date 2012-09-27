@@ -121,4 +121,10 @@ public class FactoryTest {
         assertEquals("Camel In Action", book.getTitle());
         assertEquals("Claus Ibsen", book.getAuthor());
     }
+
+    @Test
+    public void fields() {
+        Book book = build(Book.class, "cheap");
+        assertEquals(5, book.getPrice());
+    }
 }

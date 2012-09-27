@@ -289,7 +289,7 @@ public class ReflectionUtils {
      * @throws ClassNotFoundException
      */
     public static Set<Class<?>> getFromJARFile(final String jar, final String packageName) throws IOException,
-            FileNotFoundException, ClassNotFoundException
+            ClassNotFoundException
     {
         Set<Class<?>> classes = new HashSet<Class<?>>();
         JarInputStream jarFile = new JarInputStream(new FileInputStream(jar));

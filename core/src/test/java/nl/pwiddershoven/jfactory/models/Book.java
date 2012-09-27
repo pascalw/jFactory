@@ -4,6 +4,7 @@ public class Book {
 
     private final String title;
     private final String author;
+    private int price = 10;
 
     public Book(String title, String author) {
         this.title = title;
@@ -16,5 +17,9 @@ public class Book {
 
     public String getAuthor() {
         return author;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

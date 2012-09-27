@@ -96,12 +96,12 @@ public abstract class ObjectFactory<T> {
         propertyValues.put(name, seq);
     }
 
-    protected int rand(int max) {
-        return new Random().nextInt(max);
-    }
-
     protected void factory(String name, String[] traits) {
         innerFactories.put(name, traits);
+    }
+
+    public static String[] traits(String... traits) {
+        return traits;
     }
 
     protected void constructWith(Object... args) {
