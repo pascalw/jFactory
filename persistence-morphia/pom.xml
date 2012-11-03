@@ -3,7 +3,7 @@
     <parent>
         <artifactId>jfactory</artifactId>
         <groupId>nl.pwiddershoven.jfactory</groupId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,7 +22,7 @@
             <groupId>nl.pwiddershoven.jfactory</groupId>
             <artifactId>jfactory-core</artifactId>
             <scope>compile</scope>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.morphia</groupId>
