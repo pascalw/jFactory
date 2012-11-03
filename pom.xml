@@ -30,6 +30,7 @@
   <scm>
     <url>https://github.com/pascalw/jfactory</url>
     <connection>scm:git:git@github.com:PascalW/jFactory.git</connection>
+    <developerConnection>scm:git:git@github.com:PascalW/jFactory.git</developerConnection>
   </scm>
 
   <developers>
