@@ -2,3 +2,7 @@
 *.DS_Store
 .idea/
 target/
+
+# Maven release plugin files
+pom.xml.*
+release.properties
