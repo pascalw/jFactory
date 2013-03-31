@@ -41,13 +41,13 @@ public class ArticleFactory extends ObjectFactory<Article> {
             }
         });
 
-        sequence("id", new Sequence() {
+        property("id", new Sequence() {
             public Object apply(int n) {
                 return n;
             }
         });
 
-        sequence("title", new Sequence() {
+        property("title", new Sequence() {
             public Object apply(int n) {
                 return String.format("Article %d", n);
             }

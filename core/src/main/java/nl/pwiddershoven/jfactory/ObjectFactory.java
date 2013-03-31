@@ -79,6 +79,24 @@ public abstract class ObjectFactory<T> {
     }
 
     /**
+     * Register a sequence value for a given field
+     * @param name name of the field
+     * @param seq Sequence object, to be evaluated later
+     */
+    protected void field(String name, Sequence seq) {
+        field(name, (Object)seq);
+    }
+
+    /**
+     * Register a lazy value for a given field
+     * @param name name of the field
+     * @param value Lazy value, to be evaluated later
+     */
+    protected void field(String name, LazyValue value) {
+        field(name, (Object)value);
+    }
+
+    /**
      * Register a static value for the given property
      * @param name name of the property
      * @param value value that should be assigned to each built object for the given property
@@ -92,8 +110,17 @@ public abstract class ObjectFactory<T> {
      * @param name name of the property
      * @param seq Sequence object, to be evaluated later
      */
-    protected void sequence(String name, Sequence seq) {
-        propertyValues.put(name, seq);
+    protected void property(String name, Sequence seq) {
+        property(name, (Object)seq);
+    }
+
+    /**
+     * Register a lazy value for a given property
+     * @param name name of the property
+     * @param value Lazy value, to be evaluated later
+     */
+    protected void property(String name, LazyValue value) {
+        property(name, (Object)value);
     }
 
     protected void factory(String name, String[] traits) {

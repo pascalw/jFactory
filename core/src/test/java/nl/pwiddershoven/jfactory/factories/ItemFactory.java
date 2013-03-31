@@ -13,7 +13,7 @@ public class ItemFactory extends ObjectFactory<Item> {
 
     @Override
     protected void define() {
-        sequence("quantity", new Sequence() {
+        property("quantity", new Sequence() {
             @Override
             public Object apply(int n) {
                 return n;
