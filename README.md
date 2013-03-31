@@ -1,4 +1,4 @@
-# jFactory
+# jFactory [![Build Status](https://travis-ci.org/PascalW/jFactory.png)](https://travis-ci.org/PascalW/jFactory)
 
 jFactory is a factory library for Java, inspired by the great [factory_girl](https://github.com/thoughtbot/factory_girl) by Thoughtbot.
 
