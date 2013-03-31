@@ -14,21 +14,21 @@ public class BookFactory extends ObjectFactory<Book> {
     protected void define() {
         constructWith("Enterprise Integration Patterns", "Gregor Hohpe");
 
-        trait(new Trait("java") {
+        trait("java", new Trait() {
             @Override
             public void apply() {
                 constructWith("Effective Java", "Joshua Bloch");
             }
         });
 
-        trait(new Trait("camel") {
+        trait("camel", new Trait() {
             @Override
             public void apply() {
                 constructWith("Camel In Action", "Claus Ibsen");
             }
         });
 
-        trait(new Trait("cheap") {
+        trait("cheap", new Trait() {
             @Override
             public void apply() {
                 field("price", 5);

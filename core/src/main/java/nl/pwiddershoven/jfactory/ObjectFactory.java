@@ -65,8 +65,8 @@ public abstract class ObjectFactory<T> {
      * Register a trait for this factory
      * @param trait
      */
-    protected void trait(Trait trait) {
-        traits.put(trait.getName(), trait);
+    protected void trait(String name, Trait trait) {
+        traits.put(name, trait);
     }
 
     /**

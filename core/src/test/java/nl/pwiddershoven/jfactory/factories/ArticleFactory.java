@@ -15,26 +15,26 @@ public class ArticleFactory extends ObjectFactory<Article> {
     protected void define() {
         property("guid", "http://pwiddershoven.nl/blog/2011/01/05/airplayer.html");
 
-        trait(new Trait("read") {
+        trait("read", new Trait() {
             public void apply() {
                 property("read", true);
             }
         });
 
-        trait(new Trait("unread") {
+        trait("unread", new Trait() {
             public void apply() {
                 property("read", false);
             }
         });
 
-        trait(new Trait("published") {
+        trait("published", new Trait() {
             @Override
             public void apply() {
                 property("state", Article.State.PUBLISHED);
             }
         });
 
-        trait(new Trait("unpublished") {
+        trait("unpublished", new Trait() {
             @Override
             public void apply() {
                 property("state", Article.State.UNPUBLISHED);
