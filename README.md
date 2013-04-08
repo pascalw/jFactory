@@ -158,3 +158,8 @@ public abstract class MorphiaBackedPersistableObjectFactory<T> extends Persistab
 
 Basically, you only have to define a method that can persist built objects.
 PersistableObjectFactories should also allow to set some connection details, like the `setDatastore` method in the example above.
+
+# Availability
+
+jFactory releases are available in [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cjfactory).  
+Snapshots of master are available at the [Sonatype OSS snapshot repository](https://oss.sonatype.org/content/repositories/snapshots/).
