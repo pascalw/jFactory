@@ -1,6 +1,5 @@
 package nl.pwiddershoven.jfactory;
 
-import nl.pwiddershoven.jfactory.utils.ReflectionUtils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.*;

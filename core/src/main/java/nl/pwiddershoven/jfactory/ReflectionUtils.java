@@ -1,4 +1,4 @@
-package nl.pwiddershoven.jfactory.utils;
+package nl.pwiddershoven.jfactory;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -16,7 +16,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
 @SuppressWarnings("unchecked")
-public class ReflectionUtils {
+class ReflectionUtils {
 
     /**
      * Set the property identified by name to the provided value.

@@ -4,7 +4,6 @@ import nl.pwiddershoven.jfactory.annotations.AfterFactoryBuild;
 import nl.pwiddershoven.jfactory.types.LazyValue;
 import nl.pwiddershoven.jfactory.types.Sequence;
 import nl.pwiddershoven.jfactory.types.Trait;
-import nl.pwiddershoven.jfactory.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
